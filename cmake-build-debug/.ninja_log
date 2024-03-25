@@ -1,0 +1,15 @@
+# ninja log v5
+182	2500	1711385458619898507	CMakeFiles/music_db.dir/src/functiontools.cpp.o	7ac18adb54da9f7d
+1	182	1711385456303799663	/home/user064/CLionProjects/music_db/cmake-build-debug/music_db_autogen/timestamp	46a83198592e5396
+1	182	1711385456303799663	music_db_autogen/mocs_compilation.cpp	46a83198592e5396
+1	182	1711385456303799663	/home/user064/CLionProjects/music_db/cmake-build-debug/music_db_autogen/mocs_compilation.cpp	46a83198592e5396
+1	182	1711385456303799663	music_db_autogen/timestamp	46a83198592e5396
+182	2876	1711385458995914555	CMakeFiles/music_db.dir/src/SQLiteDB.cpp.o	c6822572719b22bd
+192	1614	1711385263223571766	CMakeFiles/music_db.dir/src/controller.cpp.o	22cef3a4edbdc121
+1	168	1711385668688874761	music_db_autogen/timestamp	46a83198592e5396
+1	168	1711385668688874761	music_db_autogen/mocs_compilation.cpp	46a83198592e5396
+1	168	1711385668688874761	/home/user064/CLionProjects/music_db/cmake-build-debug/music_db_autogen/timestamp	46a83198592e5396
+1	168	1711385668688874761	/home/user064/CLionProjects/music_db/cmake-build-debug/music_db_autogen/mocs_compilation.cpp	46a83198592e5396
+169	767	1711385669288900427	CMakeFiles/music_db.dir/src/functiontools.cpp.o	c6995022fb4a128b
+169	1213	1711385669732919422	CMakeFiles/music_db.dir/src/SQLiteDB.cpp.o	210e763dda63c91d
+169	1802	1711385670320944574	CMakeFiles/music_db.dir/src/controller.cpp.o	523962111db7584e

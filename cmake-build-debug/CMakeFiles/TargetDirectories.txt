@@ -1,0 +1,5 @@
+/home/user064/CLionProjects/music_db/cmake-build-debug/CMakeFiles/music_db.dir
+/home/user064/CLionProjects/music_db/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/user064/CLionProjects/music_db/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/user064/CLionProjects/music_db/cmake-build-debug/CMakeFiles/music_db_autogen_timestamp_deps.dir
+/home/user064/CLionProjects/music_db/cmake-build-debug/CMakeFiles/music_db_autogen.dir
