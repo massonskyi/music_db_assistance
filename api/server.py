@@ -1,3 +1,5 @@
+import random
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlite3 import Error
@@ -8,7 +10,8 @@ from models import artist, album, track, genres, track_genres
 app = FastAPI()
 
 # Initialize SQLiteDB instance
-db = SQLiteDB("/home/user064/CLionProjects/music_db/data/music_database.db")  # Replace "your_database.db" with your actual database file
+db = SQLiteDB(
+    "/home/user064/CLionProjects/music_db/data/music_database.db")  # Replace "your_database.db" with your actual database file
 
 
 # Define Pydantic models for request and response bodies
@@ -52,6 +55,29 @@ async def add_artist(artist: Artist):
     try:
         db.add_artist(artist)
         return {"message": "Artist added successfully"}
+    except Error as e:
+        raise HTTPException(status_code=500, detail=f"Error adding artist: {str(e)}")
+
+
+@app.get("/tracks/")
+async def get_tracks():
+    return db.get_tracks()
+
+
+@app.get("/api/v1/songs/random/")
+async def get_tracks():
+    array = db.get_tracks()
+    if len(array) == 0:
+        return {"message": "No tracks found"}
+    rarray = random.choice(array)
+    return rarray
+
+
+@app.post("/tracks/")
+async def add_artist(track: Track):
+    try:
+        db.add_track(track)
+        return {"message": "Track added successfully"}
     except Error as e:
         raise HTTPException(status_code=500, detail=f"Error adding artist: {str(e)}")
 

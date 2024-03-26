@@ -47,7 +47,11 @@ class SQLiteDB:
         print("Вызов функции GetTracks класса SQLiteDB")
         try:
             cursor = self.prepare_statement("SELECT * FROM tracks")
-            return [track(*row) for row in cursor.fetchall()]
+            array_tracks = cursor.fetchall()
+            tracks = []
+            for row in array_tracks:
+                tracks.append(track(row[3], row[1], row[2], row[4]))
+            return tracks
         except sqlite3.Error as e:
             print("Ошибка при получении списка треков:", str(e))
             raise
@@ -73,8 +77,7 @@ class SQLiteDB:
     def add_artist(self, artist):
         print("Вызов функции AddArtist класса SQLiteDB")
         try:
-            self.prepare_statement("INSERT INTO artists (name, biography, photo) VALUES (?, ?, ?)",
-                                   (artist.name, artist.biography, artist.photo))
+            self.prepare_statement(f"INSERT INTO artists (name, biography, photo) VALUES ({artist.name}, {artist.biography}, {artist.photo})")
             self.db.commit()
         except sqlite3.Error as e:
             print("Ошибка при добавлении исполнителя:", str(e))
@@ -83,8 +86,7 @@ class SQLiteDB:
     def add_album(self, album):
         print("Вызов функции AddAlbums класса SQLiteDB")
         try:
-            self.prepare_statement("INSERT INTO albums (title, release_date, artist_id, cover_art) VALUES (?, ?, ?, ?)",
-                                   (album.title, album.release_date, album.artist_id, album.cover_art))
+            self.prepare_statement(f"INSERT INTO albums (title, release_date, artist_id, cover_art) VALUES ({album.title}, {album.release_date}, {album.artist_id}, {album.cover_art})")
             self.db.commit()
         except sqlite3.Error as e:
             print("Ошибка при добавлении альбома:", str(e))
@@ -93,8 +95,7 @@ class SQLiteDB:
     def add_track(self, track):
         print("Вызов функции AddTrack класса SQLiteDB")
         try:
-            self.prepare_statement("INSERT INTO tracks (title, duration, album_id, audiofile) VALUES (?, ?, ?, ?)",
-                                   (track.title, track.duration, track.album_id, track.audio_file))
+            self.prepare_statement(f"INSERT INTO tracks (title, release_date, album_id, genre_id) VALUES ({track.title},{track.release_date}, {track.album_id}, {track.genre_id})")
             self.db.commit()
         except sqlite3.Error as e:
             print("Ошибка при добавлении трека:", str(e))
@@ -103,7 +104,7 @@ class SQLiteDB:
     def add_genres(self, genres):
         print("Вызов функции AddGenres класса SQLiteDB")
         try:
-            self.prepare_statement("INSERT INTO genres (name) VALUES (?)", (genres.name,))
+            self.prepare_statement(f"INSERT INTO genres (name) VALUES ({genres.name})")
             self.db.commit()
         except sqlite3.Error as e:
             print("Ошибка при добавлении жанра:", str(e))
@@ -112,8 +113,7 @@ class SQLiteDB:
     def add_track_genres(self, track_genres):
         print("Вызов функции AddTrackGenres класса SQLiteDB")
         try:
-            self.prepare_statement("INSERT INTO track_genres (track_id, genres_id) VALUES (?, ?)",
-                                   (track_genres.track_id, track_genres.genres_id))
+            self.prepare_statement(f"INSERT INTO track_genres (track_id, genre_id) VALUES ({track_genres.track_id},{track_genres.genre_id})")
             self.db.commit()
         except sqlite3.Error as e:
             print("Ошибка при добавлении жанра трека:", str(e))
@@ -122,7 +122,7 @@ class SQLiteDB:
     def get_id_artist_from_name(self, artist_name):
         print("Вызов функции GetIdArtistFromName класса SQLiteDB")
         try:
-            cursor = self.prepare_statement("SELECT id FROM artists WHERE name = ?", (artist_name,))
+            cursor = self.prepare_statement(f"SELECT id FROM artists WHERE name = {artist_name}")
             row = cursor.fetchone()
             return row[0] if row else None
         except sqlite3.Error as e:
@@ -132,7 +132,7 @@ class SQLiteDB:
     def get_id_album_from_title(self, album_title):
         print("Вызов функции GetIdAlbumFromTitle класса SQLiteDB")
         try:
-            cursor = self.prepare_statement("SELECT id FROM albums WHERE title = ?", (album_title,))
+            cursor = self.prepare_statement(f"SELECT id FROM albums WHERE title = {album_title}")
             row = cursor.fetchone()
             return row[0] if row else None
         except sqlite3.Error as e:

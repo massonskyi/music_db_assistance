@@ -86,4 +86,4 @@ def move_file_to_directory(filepath, dest_dir="/res"):
     shutil.copy(filepath, dest_filepath)
     return dest_filepath
 
-print(get_metadata_from_file("/home/user064/CLionProjects/music_db/res/Death Grips - Get Got.mp3"))
+# print(get_metadata_from_file("/home/user064/CLionProjects/music_db/res/Death Grips - Get Got.mp3"))
