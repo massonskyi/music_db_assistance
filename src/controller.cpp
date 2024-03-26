@@ -1,7 +1,10 @@
 #include "../includes/controllers.h"
 
 namespace artist_controller{
-    ArtistModel::ArtistModel(const std::vector<models::artist> &artists): artists_(artists) {}
+    ArtistModel::ArtistModel(const std::vector<models::artist> &artists,SQLiteDB& db):
+    artists_(artists), db_(db) {
+        this->update();
+    }
 
     [[nodiscard]] int ArtistModel::rowCount(const QModelIndex &parent) const {
         return artists_.size();
@@ -38,7 +41,9 @@ namespace artist_controller{
     }
 
     void ArtistModel::update() {
-        emit dataChanged(QModelIndex(), QModelIndex());
+        beginResetModel();
+        this->artists_ = this->db_.GetArtists();
+        endResetModel();
     }
 
 
@@ -46,7 +51,10 @@ namespace artist_controller{
 }
 namespace album_controller{
 
-    AlbumModel::AlbumModel(const std::vector<models::album> &albums):albums_(albums) {}
+    AlbumModel::AlbumModel(const std::vector<models::album> &albums, SQLiteDB& db)
+    :albums_(albums), db_(db) {
+        this->update();
+    }
 
     [[nodiscard]] int AlbumModel::rowCount(const QModelIndex &parent) const {
         return albums_.size();
@@ -84,14 +92,19 @@ namespace album_controller{
         return {};
     }
     void AlbumModel::update() {
-        emit dataChanged(QModelIndex(), QModelIndex());
+        beginResetModel();
+        this->albums_= this->db_.GetAlbums();
+        endResetModel();
     }
 
 }
 
 namespace track_controller{
 
-    TrackModel::TrackModel(const std::vector<models::track>& track): tracks_(track) {}
+    TrackModel::TrackModel(const std::vector<models::track>& track, SQLiteDB& db)
+    : tracks_(track), db_(db) {
+        this->update();
+    }
 
     [[nodiscard]] int TrackModel::rowCount(const QModelIndex &parent) const {
         return tracks_.size();
@@ -129,13 +142,18 @@ namespace track_controller{
         return {};
     }
     void TrackModel::update() {
-        emit dataChanged(QModelIndex(), QModelIndex());
+        beginResetModel();
+        this->tracks_= this->db_.GetTracks();
+        endResetModel();
     }
 };
 
 namespace genres_controller{
 
-    GenresModel::GenresModel(const std::vector<models::genres>& genres) : genres_(genres) {}
+    GenresModel::GenresModel(const std::vector<models::genres>& genres, SQLiteDB& db)
+    : genres_(genres), db_(db) {
+        this->update();
+    }
 
     [[nodiscard]] int GenresModel::rowCount(const QModelIndex &parent) const {
         return genres_.size();
@@ -167,12 +185,17 @@ namespace genres_controller{
         return {};
     }
     void GenresModel::update() {
-        emit dataChanged(QModelIndex(), QModelIndex());
+        beginResetModel();
+        this->genres_= this->db_.GetGenres();
+        endResetModel();
     }
 }
 namespace track_genres_controller{
 
-    TrackGendersModel::TrackGendersModel(const std::vector<models::track_genres> &track_genres): track_genres_(track_genres) {}
+    TrackGendersModel::TrackGendersModel(const std::vector<models::track_genres> &track_genres, SQLiteDB& db)
+    : track_genres_(track_genres), db_(db) {
+        this->update();
+    }
 
     [[nodiscard]] int TrackGendersModel::rowCount(const QModelIndex &parent) const {
         return track_genres_.size();
@@ -204,6 +227,8 @@ namespace track_genres_controller{
         return {};
     }
     void TrackGendersModel::update() {
-        emit dataChanged(QModelIndex(), QModelIndex());
+        beginResetModel();
+        this->track_genres_= this->db_.GetTrackGenres();
+        endResetModel();
     }
 }

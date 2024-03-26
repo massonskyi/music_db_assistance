@@ -6,6 +6,7 @@
 namespace cst{
     const std::string kDatabaseFilename = "/home/user064/CLionProjects/music_db/data/music_database.db";
 }
+
 namespace settings{
     constexpr uint16_t min_width = 1280;
     constexpr uint16_t min_height = 800;

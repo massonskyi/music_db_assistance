@@ -1,11 +1,12 @@
-#include "../includes/IMusic.h"
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTableView>
 #include <QLabel>
 #include <QtWidgets>
-
+#include <QMessageBox>
+#include "../includes/hpp/out.hpp"
+#include "../includes/IMusic.h"
 using namespace album_controller;
 using namespace artist_controller;
 using namespace track_controller;
@@ -13,40 +14,36 @@ using namespace genres_controller;
 using namespace track_genres_controller;
 
 IMusic::IMusic(QWidget *parent)
-: QWidget(parent)
+: QWidget(parent), db_(cst::kDatabaseFilename)
 {
-    print("Начало инициализации проекта");
+    out::print("Начало инициализации проекта");
     int r = this->initializeWindow();
-    if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
-    }
-    r = this->initializeDatabase();
     if(!r){
         throw std::runtime_error("Не удалось инициализировать окно");
     }
     r = this->loadDataFromDatabase();
     if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
+        throw std::runtime_error("Не удалось загрузить данные из БД");
     }
     r = this->createArtistInputSection();
     if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
+        throw std::runtime_error("Не создать окно для ввода артиста");
     }
     r = this->createAlbumInputSection();
     if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
+        throw std::runtime_error("Не создать окно для ввода альбома");
     }
     r = this->createTrackInputSection();
     if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
+        throw std::runtime_error("Не создать окно для ввода трека");
     }
 
     r = this->createTabWidget();
     if(!r){
-        throw std::runtime_error("Не удалось инициализировать окно");
+        throw std::runtime_error("Не создать виджет для ввода данных");
     }
     this->dropTargetLabel->setAcceptDrops(true);
-    print("Конец инициализации");
+    out::print("Конец инициализации");
 }
 bool IMusic::initializeWindow(){
     try {
@@ -211,28 +208,21 @@ bool IMusic::createTabWidget(){
         return false;
     }
 }
-bool IMusic::initializeDatabase(){
-    try{
-        this->db_ = std::make_unique<SQLiteDB>(cst::kDatabaseFilename);
-        return true;
-    }catch(...){
-        return false;
-    }
-}
+
 bool IMusic::loadDataFromDatabase(){
     try {
         this->artists_ = GetArtists();
-        this->artists_model_ = new ArtistModel(this->artists_);
+        this->artists_model_ = new ArtistModel(this->artists_, this->db_);
         this->albums_ = GetAlbum();
-        this->albums_model_ = new AlbumModel(this->albums_);
+        this->albums_model_ = new AlbumModel(this->albums_,this->db_);
         this->tracks_ = GetTrack();
-        this->tracks_model_ = new TrackModel(this->tracks_);
+        this->tracks_model_ = new TrackModel(this->tracks_,this->db_);
 
         this->genres_ = GetGenres();
-        this->genres_model_ = new GenresModel(this->genres_);
+        this->genres_model_ = new GenresModel(this->genres_,this->db_);
 
         this->track_genres_ = GetTrackGenres();
-        this->track_genres_model_ = new TrackGendersModel(this->track_genres_);
+        this->track_genres_model_ = new TrackGendersModel(this->track_genres_,this->db_);
         return true;
     }catch(...){
         return false;
@@ -267,9 +257,56 @@ void IMusic::dropEvent(QDropEvent* event) {
         for (const QUrl& url : urls) {
             QString filePath = url.toLocalFile();
             if (filePath.endsWith(".mp3", Qt::CaseInsensitive)) {
-                // Process the dropped MP3 file
-                print(std::format("Dropped MP3 file: {}",filePath.toStdString()));
-                ft::get_mp3_info_py(filePath.toStdString());
+                out::print(std::format("Dropped MP3 file: {}",filePath.toStdString()));
+                std::string buffer = ft::copy_file_to_buffer_python(filePath.toStdString());
+                std::string new_path = ft::move_file_from_buffer_to_directory_python(buffer,filePath.toStdString());
+                std::vector<std::pair<const char*, const char*>> metadata = ft::get_metadata_from_mp3(new_path);
+                if(!metadata.empty()){
+                    models::artist artist;
+                    artist.name = metadata[2].second;
+                    artist.biography = "undefined";
+                    artist.photo = "undefined";
+                    this->AddArtist(artist);
+                    models::album album;
+                    if(metadata[3].second == NULL || strcmp(metadata[3].second, "nullptr") == 0){
+                        album.title = "undefined";
+                    }else{
+                        album.title = metadata[3].second;
+                    }
+                    if(metadata[4].second == NULL || strcmp(metadata[4].second, "nullptr") == 0){
+                        album.release_date = "undefined";
+                    }else{
+                        album.release_date = metadata[4].second;
+                    }
+                    album.artist_id = this->db_.GetIdArtistFromName(artist.name);
+
+                    if(metadata[11].second == NULL || strcmp(metadata[11].second, "nullptr") == 0) {
+                        album.cover_art = "undefined";
+                    }else{
+                        album.cover_art = metadata[11].second;
+                    }
+                    this->AddAlbum(album);
+                    models::track track;
+                    if(metadata[1].second == NULL || strcmp(metadata[1].second, "nullptr") == 0) {
+                        track.title = "undefined";
+                    }else{
+                        track.title = metadata[1].second;
+                    }
+                    if(metadata[6].second == NULL || strcmp(metadata[6].second, "nullptr") == 0) {
+                        track.duration = "undefined";
+                    }else{
+                        track.duration = metadata[6].second;
+                    }
+                    track.album_id = this->db_.GetIdAlbumFromTitle(album.title);
+
+                    track.audio_file = metadata[0].second;
+
+                    this->AddTrack(track);
+                    models::genres genre;
+                    genre.name = metadata[5].second;
+                    this->AddGenres(genre);
+
+                }
             }
         }
     }
@@ -277,71 +314,71 @@ void IMusic::dropEvent(QDropEvent* event) {
     dropTargetLabel->setStyleSheet("");  // Reset background color (optional)
 }
 std::vector<models::artist> IMusic::GetArtists() {
-    print("Вызов функции GetArtists класса IMusic");
-    return this->db_->GetArtists();
+    out::print("Вызов функции GetArtists класса IMusic");
+    return this->db_.GetArtists();
 }
 
 std::vector<models::album> IMusic::GetAlbum() {
-    print("Вызов функции GetAlbums класса IMusic");
-    return this->db_->GetAlbums();
+    out::print("Вызов функции GetAlbums класса IMusic");
+    return this->db_.GetAlbums();
 }
 
 std::vector<models::track> IMusic::GetTrack() {
-    print("Вызов функции GetTracks класса IMusic");
-    return this->db_->GetTracks();
+    out::print("Вызов функции GetTracks класса IMusic");
+    return this->db_.GetTracks();
 }
 
 std::vector<models::genres> IMusic::GetGenres() {
-    print("Вызов функции GetGenres класса IMusic");
-    return this->db_->GetGenres();
+    out::print("Вызов функции GetGenres класса IMusic");
+    return this->db_.GetGenres();
 }
 
 std::vector<models::track_genres> IMusic::GetTrackGenres() {
-    print("Вызов функции GetTraskGenres класса IMusic");
-    return this->db_->GetTraskGenres();
+    out::print("Вызов функции GetTraskGenres класса IMusic");
+    return this->db_.GetTrackGenres();
 }
 
 void IMusic::AddArtist(const models::artist &artist) {
-    print("Вызов функции AddArtist класса IMusic");
-    this->db_->AddArtist(artist);
-    print("Вызов функции GetArtists класса IMusic");
+    out::print("Вызов функции AddArtist класса IMusic");
+    this->db_.AddArtist(artist);
+    out::print("Вызов функции GetArtists класса IMusic");
     this->artists_ = GetArtists();
-    print("Вызов функции update класса ArtistModel");
+    out::print("Вызов функции update класса ArtistModel");
     this->artists_model_->update();
 }
 
 void IMusic::AddAlbum(const models::album& album) {
-    print("Вызов функции AddAlbums класса IMusic");
-    this->db_->AddAlbums(album);
-    print("Вызов функции GetAlbum класса IMusic");
+    out::print("Вызов функции AddAlbums класса IMusic");
+    this->db_.AddAlbums(album);
+    out::print("Вызов функции GetAlbum класса IMusic");
     this->albums_ = GetAlbum();
-    print("Вызов функции update класса AlbumModel");
+    out::print("Вызов функции update класса AlbumModel");
     this->albums_model_->update();
 }
 
 void IMusic::AddTrack(const models::track& track) {
-    print("Вызов функции AddTrack класса IMusic");
-    this->db_->AddTrack(track);
-    print("Вызов функции GetTrack класса IMusic");
+    out::print("Вызов функции AddTrack класса IMusic");
+    this->db_.AddTrack(track);
+    out::print("Вызов функции GetTrack класса IMusic");
     this->tracks_ = GetTrack();
-    print("Вызов функции update класса TrackModel");
+    out::print("Вызов функции update класса TrackModel");
     this->tracks_model_->update();
 }
 
 void IMusic::AddGenres(const models::genres& genres) {
-    print("Вызов функции AddGenres класса IMusic");
-    this->db_->AddGenres(genres);
-    print("Вызов функции GetGenres класса IMusic");
+    out::print("Вызов функции AddGenres класса IMusic");
+    this->db_.AddGenres(genres);
+    out::print("Вызов функции GetGenres класса IMusic");
     this->genres_ = GetGenres();
-    print("Вызов функции update класса GenresModel");
+    out::print("Вызов функции update класса GenresModel");
     this->genres_model_->update();
 }
 
 void IMusic::AddTrackGenres(const models::track_genres& track_genres) {
-    print("Вызов функции AddTrackGenres класса IMusic");
-    this->db_->AddTrackGenres(track_genres);
-    print("Вызов функции GetTrackGenres класса IMusic");
+    out::print("Вызов функции AddTrackGenres класса IMusic");
+    this->db_.AddTrackGenres(track_genres);
+    out::print("Вызов функции GetTrackGenres класса IMusic");
     this->track_genres_ = GetTrackGenres();
-    print("Вызов функции update класса TrackGendersModel");
+    out::print("Вызов функции update класса TrackGendersModel");
     this->track_genres_model_->update();
 }

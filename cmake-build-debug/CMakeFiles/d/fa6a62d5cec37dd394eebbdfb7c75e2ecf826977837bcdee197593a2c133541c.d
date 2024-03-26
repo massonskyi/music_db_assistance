@@ -24,8 +24,8 @@ music_db_autogen/timestamp: \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPkgConfig.cmake \
+  /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPython.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPython/Support.cmake \
-  /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPython3.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindThreads.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindVulkan.cmake \
   /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/GNUInstallDirs.cmake \
@@ -49,6 +49,7 @@ music_db_autogen/timestamp: \
   /home/user064/CLionProjects/music_db/includes/consts.h \
   /home/user064/CLionProjects/music_db/includes/controllers.h \
   /home/user064/CLionProjects/music_db/includes/functiontools.h \
+  /home/user064/CLionProjects/music_db/includes/hpp/out.hpp \
   /home/user064/CLionProjects/music_db/includes/models.h \
   /home/user064/CLionProjects/music_db/main.cpp \
   /home/user064/CLionProjects/music_db/src/IMusic.cpp \
@@ -80,6 +81,7 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/bits/c++0x_warning.h \
   /usr/include/c++/13/bits/char_traits.h \
   /usr/include/c++/13/bits/charconv.h \
+  /usr/include/c++/13/bits/codecvt.h \
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
@@ -94,12 +96,16 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/bits/hash_bytes.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
+  /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/list.tcc \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
+  /usr/include/c++/13/bits/locale_conv.h \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
+  /usr/include/c++/13/bits/locale_facets_nonio.h \
+  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
@@ -165,6 +171,7 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/bits/vector.tcc \
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
+  /usr/include/c++/13/charconv \
   /usr/include/c++/13/chrono \
   /usr/include/c++/13/climits \
   /usr/include/c++/13/clocale \
@@ -175,6 +182,7 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdlib \
   /usr/include/c++/13/cstring \
+  /usr/include/c++/13/ctime \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
@@ -187,13 +195,17 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
   /usr/include/c++/13/ext/type_traits.h \
+  /usr/include/c++/13/format \
   /usr/include/c++/13/functional \
   /usr/include/c++/13/initializer_list \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
+  /usr/include/c++/13/iostream \
+  /usr/include/c++/13/istream \
   /usr/include/c++/13/iterator \
   /usr/include/c++/13/limits \
   /usr/include/c++/13/list \
+  /usr/include/c++/13/locale \
   /usr/include/c++/13/map \
   /usr/include/c++/13/memory \
   /usr/include/c++/13/new \
@@ -205,6 +217,7 @@ music_db_autogen/timestamp: \
   /usr/include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/include/c++/13/pstl/glue_memory_defs.h \
   /usr/include/c++/13/pstl/glue_numeric_defs.h \
+  /usr/include/c++/13/span \
   /usr/include/c++/13/stdexcept \
   /usr/include/c++/13/streambuf \
   /usr/include/c++/13/string \
@@ -233,120 +246,12 @@ music_db_autogen/timestamp: \
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
-  /usr/include/inttypes.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
-  /usr/include/math.h \
   /usr/include/pthread.h \
-  /usr/include/python3.11/Python.h \
-  /usr/include/python3.11/abstract.h \
-  /usr/include/python3.11/bltinmodule.h \
-  /usr/include/python3.11/boolobject.h \
-  /usr/include/python3.11/bytearrayobject.h \
-  /usr/include/python3.11/bytesobject.h \
-  /usr/include/python3.11/ceval.h \
-  /usr/include/python3.11/codecs.h \
-  /usr/include/python3.11/compile.h \
-  /usr/include/python3.11/complexobject.h \
-  /usr/include/python3.11/cpython/abstract.h \
-  /usr/include/python3.11/cpython/bytearrayobject.h \
-  /usr/include/python3.11/cpython/bytesobject.h \
-  /usr/include/python3.11/cpython/cellobject.h \
-  /usr/include/python3.11/cpython/ceval.h \
-  /usr/include/python3.11/cpython/classobject.h \
-  /usr/include/python3.11/cpython/code.h \
-  /usr/include/python3.11/cpython/compile.h \
-  /usr/include/python3.11/cpython/complexobject.h \
-  /usr/include/python3.11/cpython/context.h \
-  /usr/include/python3.11/cpython/descrobject.h \
-  /usr/include/python3.11/cpython/dictobject.h \
-  /usr/include/python3.11/cpython/fileobject.h \
-  /usr/include/python3.11/cpython/fileutils.h \
-  /usr/include/python3.11/cpython/floatobject.h \
-  /usr/include/python3.11/cpython/funcobject.h \
-  /usr/include/python3.11/cpython/genobject.h \
-  /usr/include/python3.11/cpython/import.h \
-  /usr/include/python3.11/cpython/initconfig.h \
-  /usr/include/python3.11/cpython/listobject.h \
-  /usr/include/python3.11/cpython/longintrepr.h \
-  /usr/include/python3.11/cpython/longobject.h \
-  /usr/include/python3.11/cpython/methodobject.h \
-  /usr/include/python3.11/cpython/modsupport.h \
-  /usr/include/python3.11/cpython/object.h \
-  /usr/include/python3.11/cpython/objimpl.h \
-  /usr/include/python3.11/cpython/odictobject.h \
-  /usr/include/python3.11/cpython/picklebufobject.h \
-  /usr/include/python3.11/cpython/pyctype.h \
-  /usr/include/python3.11/cpython/pydebug.h \
-  /usr/include/python3.11/cpython/pyerrors.h \
-  /usr/include/python3.11/cpython/pyfpe.h \
-  /usr/include/python3.11/cpython/pyframe.h \
-  /usr/include/python3.11/cpython/pylifecycle.h \
-  /usr/include/python3.11/cpython/pymem.h \
-  /usr/include/python3.11/cpython/pystate.h \
-  /usr/include/python3.11/cpython/pythonrun.h \
-  /usr/include/python3.11/cpython/pythread.h \
-  /usr/include/python3.11/cpython/pytime.h \
-  /usr/include/python3.11/cpython/setobject.h \
-  /usr/include/python3.11/cpython/sysmodule.h \
-  /usr/include/python3.11/cpython/traceback.h \
-  /usr/include/python3.11/cpython/tupleobject.h \
-  /usr/include/python3.11/cpython/unicodeobject.h \
-  /usr/include/python3.11/cpython/warnings.h \
-  /usr/include/python3.11/cpython/weakrefobject.h \
-  /usr/include/python3.11/descrobject.h \
-  /usr/include/python3.11/dictobject.h \
-  /usr/include/python3.11/enumobject.h \
-  /usr/include/python3.11/exports.h \
-  /usr/include/python3.11/fileobject.h \
-  /usr/include/python3.11/fileutils.h \
-  /usr/include/python3.11/floatobject.h \
-  /usr/include/python3.11/genericaliasobject.h \
-  /usr/include/python3.11/import.h \
-  /usr/include/python3.11/intrcheck.h \
-  /usr/include/python3.11/iterobject.h \
-  /usr/include/python3.11/listobject.h \
-  /usr/include/python3.11/longobject.h \
-  /usr/include/python3.11/memoryobject.h \
-  /usr/include/python3.11/methodobject.h \
-  /usr/include/python3.11/modsupport.h \
-  /usr/include/python3.11/moduleobject.h \
-  /usr/include/python3.11/object.h \
-  /usr/include/python3.11/objimpl.h \
-  /usr/include/python3.11/osmodule.h \
-  /usr/include/python3.11/patchlevel.h \
-  /usr/include/python3.11/pybuffer.h \
-  /usr/include/python3.11/pycapsule.h \
-  /usr/include/python3.11/pyconfig.h \
-  /usr/include/python3.11/pyerrors.h \
-  /usr/include/python3.11/pyframe.h \
-  /usr/include/python3.11/pyhash.h \
-  /usr/include/python3.11/pylifecycle.h \
-  /usr/include/python3.11/pymacconfig.h \
-  /usr/include/python3.11/pymacro.h \
-  /usr/include/python3.11/pymath.h \
-  /usr/include/python3.11/pymem.h \
-  /usr/include/python3.11/pyport.h \
-  /usr/include/python3.11/pystate.h \
-  /usr/include/python3.11/pystrcmp.h \
-  /usr/include/python3.11/pystrtod.h \
-  /usr/include/python3.11/pythonrun.h \
-  /usr/include/python3.11/pythread.h \
-  /usr/include/python3.11/pytypedefs.h \
-  /usr/include/python3.11/rangeobject.h \
-  /usr/include/python3.11/setobject.h \
-  /usr/include/python3.11/sliceobject.h \
-  /usr/include/python3.11/structseq.h \
-  /usr/include/python3.11/sysmodule.h \
-  /usr/include/python3.11/traceback.h \
-  /usr/include/python3.11/tracemalloc.h \
-  /usr/include/python3.11/tupleobject.h \
-  /usr/include/python3.11/typeslots.h \
-  /usr/include/python3.11/unicodeobject.h \
-  /usr/include/python3.11/warnings.h \
-  /usr/include/python3.11/weakrefobject.h \
   /usr/include/sched.h \
   /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
@@ -373,21 +278,12 @@ music_db_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
-  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
-  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
-  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
   /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
-  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
@@ -397,16 +293,12 @@ music_db_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
-  /usr/include/x86_64-linux-gnu/bits/stat.h \
-  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
-  /usr/include/x86_64-linux-gnu/bits/statx.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
-  /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
   /usr/include/x86_64-linux-gnu/bits/time.h \
@@ -432,8 +324,6 @@ music_db_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
@@ -457,12 +347,14 @@ music_db_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
-  /usr/include/x86_64-linux-gnu/python3.11/pyconfig.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/QAbstractTableModel \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
@@ -580,10 +472,13 @@ music_db_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qwidget.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
-  /usr/include/x86_64-linux-gnu/sys/stat.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
-  /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/cmake/pybind11/pybind11Common.cmake \
+  /usr/lib/cmake/pybind11/pybind11Config.cmake \
+  /usr/lib/cmake/pybind11/pybind11ConfigVersion.cmake \
+  /usr/lib/cmake/pybind11/pybind11NewTools.cmake \
+  /usr/lib/cmake/pybind11/pybind11Targets.cmake \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \

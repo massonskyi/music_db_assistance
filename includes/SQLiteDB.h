@@ -11,7 +11,7 @@
 
 #include "models.h"
 #include "functiontools.h"
-
+#include "hpp/out.hpp"
 class SQLiteDB {
 public:
     explicit SQLiteDB(const std::string&);
@@ -21,19 +21,20 @@ public:
     std::vector<models::album> GetAlbums();
     std::vector<models::track> GetTracks();
     std::vector<models::genres> GetGenres();
-    std::vector<models::track_genres> GetTraskGenres();
-
+    std::vector<models::track_genres> GetTrackGenres();
 
     void AddArtist(const models::artist&);
     void AddAlbums(const models::album&);
     void AddTrack(const models::track&);
     void AddGenres(const models::genres&);
     void AddTrackGenres(const models::track_genres&);
+
+    int GetIdArtistFromName(const std::string&);
+    int GetIdAlbumFromTitle(const std::string&);
 protected:
     sqlite3_stmt* PrepareStatement(const std::string&);
 
 private:
-    ft::print_info print;
     sqlite3* db;
 };
 

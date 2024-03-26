@@ -1,5 +1,8 @@
 /home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/user064/.local/share/JetBrains/Toolbox/apps/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/user064/CLionProjects/music_db -B /home/user064/CLionProjects/music_db/cmake-build-debug
 -- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")
+-- Found Python: /usr/bin/python3.11 (found version "3.11.6") found components: Interpreter 
+-- Found pybind11: /usr/include (found version "2.11.1")
+-- Found Python: /usr/bin/python3.11 (found version "3.11.6") found components: Interpreter Development Development.Module Development.Embed 
 -- Configuring done (0.1s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/user064/CLionProjects/music_db/cmake-build-debug

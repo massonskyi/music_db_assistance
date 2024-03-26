@@ -10,9 +10,11 @@
 #include "consts.h"
 #include "controllers.h"
 #include "functiontools.h"
+#include "hpp/out.hpp"
 class QVBoxLayout;
 class QTabWidget;
 class QLabel;
+
 class IMusic : public QWidget{
     Q_OBJECT
 
@@ -49,8 +51,7 @@ private:
     QVBoxLayout* trackInputLayout{};
     QTabWidget* tabWidget{};
     QLabel* dropTargetLabel{};
-    ft::print_info print;
-    std::unique_ptr<SQLiteDB> db_;
+    SQLiteDB db_;
     std::vector<models::artist> artists_;
     std::vector<models::album> albums_;
     std::vector<models::track> tracks_;
@@ -62,6 +63,4 @@ private:
     genres_controller::GenresModel* genres_model_{};
     track_genres_controller::TrackGendersModel* track_genres_model_{};
 };
-
-
 #endif //MUSIC_DB_IMUSIC_H

@@ -4,36 +4,36 @@
 #include "../includes/SQLiteDB.h"
 
 SQLiteDB::SQLiteDB(const std::string &db_name) {
-    print("Начало подлючения к базе данных");
+    out::print("Начало подлючения к базе данных");
     if (sqlite3_open(db_name.c_str(), &db)) {
-        std::cerr << "Не удалось открыть базу данных: " << sqlite3_errmsg(db) << std::endl;
+        out::error("Не удалось открыть базу данных: ",sqlite3_errmsg(db));
         throw std::runtime_error("Failed to open database");
     }
-    print(std::format("База данных открыта {}",sqlite3_errmsg(this->db)));
+    out::print("База данных открыта",sqlite3_errmsg(this->db));
 }
 
 SQLiteDB::~SQLiteDB() {
     if(sqlite3_errcode(this->db) == SQLITE_OK) {
-        print("База данных будет закрыта");
+        out::print("База данных будет закрыта");
         sqlite3_close(this->db);
     } else {
-        print("База данных не открыта");
+        out::print("База данных не открыта");
     }
 }
 
 sqlite3_stmt *SQLiteDB::PrepareStatement(const std::string &sql) {
-    print("Вызов функции PrepareStatement класса SQLiteDB");
+    out::print("Вызов функции PrepareStatement класса SQLiteDB");
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(this->db, sql.c_str(), -1, &stmt, nullptr);
     if (rc != SQLITE_OK) {
-        print(std::format("Ошибка подготовки SQL-запроса:{}",sqlite3_errmsg(this->db)));
+        out::error("Ошибка подготовки SQL-запроса:",sqlite3_errmsg(this->db));
         exit(1);
     }
     return stmt;
 }
 
 std::vector<models::artist> SQLiteDB::GetArtists() {
-    print("Вызов функции GetArtists класса SQLiteDB");
+    out::print("Вызов функции GetArtists класса SQLiteDB");
     std::vector<models::artist> artists;
 
     sqlite3_stmt* stmt = PrepareStatement(
@@ -56,7 +56,7 @@ std::vector<models::artist> SQLiteDB::GetArtists() {
 }
 
 std::vector<models::album> SQLiteDB::GetAlbums() {
-    print("Вызов функции GetAlbums класса SQLiteDB");
+    out::print("Вызов функции GetAlbums класса SQLiteDB");
     std::vector<models::album> albums;
 
     sqlite3_stmt* stmt = PrepareStatement(
@@ -80,7 +80,7 @@ std::vector<models::album> SQLiteDB::GetAlbums() {
 }
 
 std::vector<models::track> SQLiteDB::GetTracks() {
-    print("Вызов функции GetTracks класса SQLiteDB");
+    out::print("Вызов функции GetTracks класса SQLiteDB");
     std::vector<models::track> tracks;
 
     sqlite3_stmt* stmt = PrepareStatement(
@@ -104,7 +104,7 @@ std::vector<models::track> SQLiteDB::GetTracks() {
 }
 
 std::vector<models::genres> SQLiteDB::GetGenres() {
-    print("Вызов функции GetGenres класса SQLiteDB");
+    out::print("Вызов функции GetGenres класса SQLiteDB");
     std::vector<models::genres> genres;
 
     sqlite3_stmt* stmt = PrepareStatement(
@@ -124,8 +124,8 @@ std::vector<models::genres> SQLiteDB::GetGenres() {
     return genres;
 }
 
-std::vector<models::track_genres> SQLiteDB::GetTraskGenres() {
-    print("Вызов функции GetTraskGenres класса SQLiteDB");
+std::vector<models::track_genres> SQLiteDB::GetTrackGenres() {
+    out::print("Вызов функции GetTraskGenres класса SQLiteDB");
     std::vector<models::track_genres> tracks_genres;
 
     sqlite3_stmt* stmt = PrepareStatement(
@@ -146,7 +146,7 @@ std::vector<models::track_genres> SQLiteDB::GetTraskGenres() {
 }
 
 void SQLiteDB::AddArtist(const models::artist& artist) {
-    print("Вызов функции AddArtist класса SQLiteDB");
+    out::print("Вызов функции AddArtist класса SQLiteDB");
 
     sqlite3_stmt* stmt = PrepareStatement(
             "INSERT INTO artists (name, biography, photo) VALUES (?, ?, ?)"
@@ -161,7 +161,7 @@ void SQLiteDB::AddArtist(const models::artist& artist) {
 }
 
 void SQLiteDB::AddAlbums(const models::album& album) {
-    print("Вызов функции AddAlbums класса SQLiteDB");
+    out::print("Вызов функции AddAlbums класса SQLiteDB");
     sqlite3_stmt* stmt = PrepareStatement(
             "INSERT INTO albums (title, release_date, artist_id, cover_art) VALUES (?, ?, ?, ?)"
     );
@@ -176,7 +176,7 @@ void SQLiteDB::AddAlbums(const models::album& album) {
 }
 
 void SQLiteDB::AddTrack(const models::track& track) {
-    print("Вызов функции AddTrack класса SQLiteDB");
+    out::print("Вызов функции AddTrack класса SQLiteDB");
     sqlite3_stmt* stmt = PrepareStatement(
             "INSERT INTO tracks (title, duration, album_id, audiofile) VALUES (?, ?, ?, ?)"
     );
@@ -191,7 +191,7 @@ void SQLiteDB::AddTrack(const models::track& track) {
 }
 
 void SQLiteDB::AddGenres(const models::genres& genres) {
-    print("Вызов функции AddGenres класса SQLiteDB");
+    out::print("Вызов функции AddGenres класса SQLiteDB");
     sqlite3_stmt* stmt = PrepareStatement(
             "INSERT INTO genres (name) VALUES (?)"
     );
@@ -203,7 +203,7 @@ void SQLiteDB::AddGenres(const models::genres& genres) {
 }
 
 void SQLiteDB::AddTrackGenres(const models::track_genres& track_genres) {
-    print("Вызов функции AddTrackGenres класса SQLiteDB");
+    out::print("Вызов функции AddTrackGenres класса SQLiteDB");
     sqlite3_stmt* stmt = PrepareStatement(
             "INSERT INTO track_genres (track_id, genres_id) VALUES (?, ?)"
     );
@@ -215,3 +215,46 @@ void SQLiteDB::AddTrackGenres(const models::track_genres& track_genres) {
     sqlite3_finalize(stmt);
 }
 
+int SQLiteDB::GetIdArtistFromName(const std::string &artistName) {
+    out::print("Вызов функции GetIdArtistFromName класса SQLiteDB");
+
+    sqlite3_stmt* stmt = PrepareStatement(
+            "SELECT id FROM artists WHERE name = ?"
+    );
+    sqlite3_bind_text(stmt, 1, artistName.c_str(), -1, SQLITE_STATIC);
+
+    // Execute the statement
+    int rc = sqlite3_step(stmt);
+    if (rc != SQLITE_ROW) {
+        // Error or no result found
+        sqlite3_finalize(stmt);
+        return 0; // Return empty string indicating artist not found
+    }
+    int artistId = sqlite3_column_int(stmt, 0);
+
+    // Finalize the statement
+    sqlite3_finalize(stmt);
+    return artistId;
+}
+
+int SQLiteDB::GetIdAlbumFromTitle(const std::string &albumTitle) {
+    out::print("Вызов функции GetIdAlbumFromTitle класса SQLiteDB");
+
+    sqlite3_stmt* stmt = PrepareStatement(
+            "SELECT id FROM albums WHERE title =?"
+    );
+    sqlite3_bind_text(stmt, 1, albumTitle.c_str(), -1, SQLITE_STATIC);
+
+    // Execute the statement
+    int rc = sqlite3_step(stmt);
+    if (rc != SQLITE_ROW) {
+        // Error or no result found
+        sqlite3_finalize(stmt);
+        return 0; // Return empty string indicating artist not found
+    }
+    int artistId = sqlite3_column_int(stmt, 0);
+
+    // Finalize the statement
+    sqlite3_finalize(stmt);
+    return artistId;
+}

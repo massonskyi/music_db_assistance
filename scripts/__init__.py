@@ -1,0 +1,1 @@
+from mp3tools import get_metadata_from_file

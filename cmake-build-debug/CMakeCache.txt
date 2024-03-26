@@ -552,7 +552,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]
 //Details about finding Python
-FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[/usr/bin/python3.11][/usr/include/python3.11][/usr/lib/x86_64-linux-gnu/libpython3.11.so][cfound components: Interpreter Development Development.Module Development.Embed ][v3.11.6(3.6)]
+FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[/usr/bin/python3.11][/usr/include/python3.11][/usr/lib/x86_64-linux-gnu/libpython3.11.so][cfound components: Interpreter Development Development.Module Development.Embed ][v3.11.6()]
 //Details about finding Python3
 FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/usr/bin/python3.11][/usr/include/python3.11][/usr/lib/x86_64-linux-gnu/libpython3.11.so][cfound components: Interpreter Development Development.Module Development.Embed ][v3.11.6()]
 //Details about finding Threads
@@ -1369,22 +1369,23 @@ _Python3_LIBRARY_RELEASE:INTERNAL=/usr/lib/x86_64-linux-gnu/libpython3.11.so
 _Python3_NumPy_REASON_FAILURE:INTERNAL=
 //Compiler reason failure
 _Python_Compiler_REASON_FAILURE:INTERNAL=
-_Python_DEVELOPMENT_EMBED_SIGNATURE:INTERNAL=8a22e9ef570db37ce4769c3a824785b9
-_Python_DEVELOPMENT_MODULE_SIGNATURE:INTERNAL=f363e50482406fb61480054d90ec1803
+_Python_DEVELOPMENT_EMBED_SIGNATURE:INTERNAL=cae57a040e5a7a1c45ae7191cd9145e0
+_Python_DEVELOPMENT_MODULE_SIGNATURE:INTERNAL=6f55d0242e6f98f685bc40eada656046
 //Development reason failure
 _Python_Development_REASON_FAILURE:INTERNAL=
-//Path to a program.
 _Python_EXECUTABLE:INTERNAL=/usr/bin/python3.11
 //Path to a file.
 _Python_INCLUDE_DIR:INTERNAL=/usr/include/python3.11
 //Python Properties
 _Python_INTERPRETER_PROPERTIES:INTERNAL=Python;3;11;6;64;;cpython-311-x86_64-linux-gnu;abi3;/usr/lib/python3.11;/usr/lib/python3.11;/usr/local/lib/python3.11/dist-packages;/usr/local/lib/python3.11/dist-packages
-_Python_INTERPRETER_SIGNATURE:INTERNAL=3aab2afd8b24dff65debf8003700a950
+_Python_INTERPRETER_SIGNATURE:INTERNAL=9706960aa2a868136534c4a00c8f3e22
+//Interpreter reason failure
+_Python_Interpreter_REASON_FAILURE:INTERNAL=
 //Path to a library.
 _Python_LIBRARY_RELEASE:INTERNAL=/usr/lib/x86_64-linux-gnu/libpython3.11.so
 //NumPy reason failure
 _Python_NumPy_REASON_FAILURE:INTERNAL=
 __pkg_config_checked_PKG_XKB:INTERNAL=1
-//Directories where pybind11 and possibly Python headers are located
-pybind11_INCLUDE_DIRS:INTERNAL=/usr/include;/usr/include/python3.11
+//Include directory for pybind11 (Python not requested)
+pybind11_INCLUDE_DIRS:INTERNAL=/usr/include
 
