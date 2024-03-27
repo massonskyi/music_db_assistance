@@ -19,16 +19,16 @@ def get_metadata_from_file(filepath):
     Function to get information from an MP3 file
     """
     print(filepath)
-    name = os.path.basename(filepath)
+    name = os.path.basename(filepath).split(".")[0]
     mp3file = eyed3.load(filepath)
     try:
         info = {
             "filename": filepath,
-            "title": mp3file.tag.title if mp3file.tag.title is not None else "nullptr",
+            "title": mp3file.tag.title if mp3file.tag.title is not None else " ",
             "artist": mp3file.tag.artist if mp3file.tag.artist is not None else "nullptr",
             "album": mp3file.tag.album if mp3file.tag.album is not None else "nullptr",
             "release_date": mp3file.tag.release_date if mp3file.tag.release_date is not None else "nullptr",
-            "genre": mp3file.tag.genre.name if mp3file.tag.genre.name is not None else "nullptr",
+            "genre": mp3file.tag.genre.name if mp3file.tag.genre is not None else "nullptr",
             "duration": str(mp3file.info.time_secs) if mp3file.info.time_secs is not None else "nullptr",
             "track_number": str(mp3file.tag.track_num.count) if mp3file.tag.track_num is not None else "nullptr",
             "album_artist": mp3file.tag.album_artist if mp3file.tag.album_artist is not None else "nullptr",
@@ -38,19 +38,12 @@ def get_metadata_from_file(filepath):
         if mp3file.tag.images:
             filepath = f"{project_dir}/res/{name}.jpg"
             image_data = mp3file.tag.images[0].image_data
-            image_mode = 'RGB'  # Adjust this according to the mode of your image data
-
-            # Create an Image object from the image data
             image = Image.open(io.BytesIO(image_data))
-
-            # Get the width and height from the Image object
-            width, height = image.size
-
-            # Saving the image to filepath
             image.save(filepath)
             info["cover"] = filepath
 
         info["comments"] = [comment.text for comment in mp3file.tag.comments]
+
     except Exception as e:
         return e
     return info
@@ -86,4 +79,4 @@ def move_file_to_directory(filepath, dest_dir="/res"):
     shutil.copy(filepath, dest_filepath)
     return dest_filepath
 
-# print(get_metadata_from_file("/home/user064/CLionProjects/music_db/res/Death Grips - Get Got.mp3"))
+print(get_metadata_from_file("/home/user064/Downloads/Молчат судна.mp3"))

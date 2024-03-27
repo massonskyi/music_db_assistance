@@ -120,8 +120,9 @@ namespace track_controller{
                 case 0: return tracks_[index.row()].id;
                 case 1: return tracks_[index.row()].title.c_str();
                 case 2: return tracks_[index.row()].duration.c_str();
-                case 3: return tracks_[index.row()].album_id;
-                case 4: return tracks_[index.row()].audio_file.c_str();
+                case 3: return tracks_[index.row()].audio_file.c_str();
+                case 4: return tracks_[index.row()].bit_rate.c_str();
+                case 5: return tracks_[index.row()].sample_freq.c_str();
             }
         }
         return {};
@@ -134,8 +135,9 @@ namespace track_controller{
                     case 0: return "ID";
                     case 1: return "Название";
                     case 2: return "Продолжительность";
-                    case 3: return "Альбом";
-                    case 4: return "Путь к файлу";
+                    case 3: return "Путь к файлу";
+                    case 4: return "bitrate";
+                    case 5: return "samplefreq";
                 }
             }
         }

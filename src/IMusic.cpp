@@ -262,6 +262,7 @@ void IMusic::dropEvent(QDropEvent* event) {
                 std::string new_path = ft::move_file_from_buffer_to_directory_python(buffer,filePath.toStdString());
                 std::vector<std::pair<const char*, const char*>> metadata = ft::get_metadata_from_mp3(new_path);
                 if(!metadata.empty()){
+                    /*
                     models::artist artist;
                     artist.name = metadata[2].second;
                     artist.biography = "undefined";
@@ -286,21 +287,21 @@ void IMusic::dropEvent(QDropEvent* event) {
                         album.cover_art = metadata[11].second;
                     }
                     this->AddAlbum(album);
+                     */
                     models::track track;
-                    if(metadata[1].second == NULL || strcmp(metadata[1].second, "nullptr") == 0) {
+                    if(metadata[1].second == NULL || strcmp(metadata[1].second, "nullptr") == 0 || strcmp(metadata[1].second, " ") == 0) {
                         track.title = "undefined";
                     }else{
-                        track.title = metadata[1].second;
+                        track.title = std::string(metadata[1].second);
                     }
                     if(metadata[6].second == NULL || strcmp(metadata[6].second, "nullptr") == 0) {
                         track.duration = "undefined";
                     }else{
                         track.duration = metadata[6].second;
                     }
-                    track.album_id = this->db_.GetIdAlbumFromTitle(album.title);
-
                     track.audio_file = metadata[0].second;
-
+                    track.bit_rate = metadata[9].second;
+                    track.sample_freq = metadata[10].second;
                     this->AddTrack(track);
                     models::genres genre;
                     genre.name = metadata[5].second;

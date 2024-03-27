@@ -23,11 +23,11 @@ namespace models{
 
     struct track{
         uint32_t id;
-        uint32_t album_id;
-
         std::string title;
         std::string duration;
         std::string audio_file;
+        std::string bit_rate;
+        std::string sample_freq;
     };
 
     struct genres{

@@ -93,8 +93,7 @@ std::vector<models::track> SQLiteDB::GetTracks() {
         track.id = sqlite3_column_int(stmt, 0);
         track.title = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
         track.duration = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
-        track.album_id = sqlite3_column_int(stmt, 3);
-        track.audio_file = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+        track.audio_file = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
 
         tracks.push_back(track);
     }
@@ -178,13 +177,14 @@ void SQLiteDB::AddAlbums(const models::album& album) {
 void SQLiteDB::AddTrack(const models::track& track) {
     out::print("Вызов функции AddTrack класса SQLiteDB");
     sqlite3_stmt* stmt = PrepareStatement(
-            "INSERT INTO tracks (title, duration, album_id, audiofile) VALUES (?, ?, ?, ?)"
+            "INSERT INTO tracks (title, duration, audiofile, bitrate, samplefreq) VALUES (?, ?, ?, ?, ?)"
     );
 
     sqlite3_bind_text(stmt, 1, track.title.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 2, track.duration.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_int(stmt, 3, (int)track.album_id);
-    sqlite3_bind_text(stmt, 4, track.audio_file.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, track.audio_file.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, track.bit_rate.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 5, track.sample_freq.c_str(), -1, SQLITE_TRANSIENT);
 
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
